@@ -1,0 +1,40 @@
+# 临时文件
+*.tmp
+*.bak
+*.swp
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+*.egg-info/
+dist/
+build/
+.eggs/
+
+# 虚拟环境
+venv/
+.venv/
+env/
+
+# IDE
+.vscode/
+.idea/
+*.sublime-*
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# 输出
+reports/
+output/
+*.json
+!package.json
+*.xlsx
+
+# 测试论文（可能含敏感内容）
+test_papers/
+test_pdfs/
