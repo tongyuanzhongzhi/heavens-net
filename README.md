@@ -3,6 +3,56 @@
 > 天网恢恢，疏而不漏。中英文双轨学术论文造假自动化检测系统。
 > 覆盖数据统计反算、图片取证、文本分析、跨论文横向比对、三层次统计方法审计五大维度。
 
+[English](#english) | [中文](#概述)
+
+---
+
+## English
+
+**Heaven's Net** (天网恢恢，疏而不漏 — "Heaven's net is vast, its mesh is fine, yet nothing slips through") is an open-source, bilingual (Chinese/English) scientific fraud detection system.
+
+### What it does
+
+Heaven's Net automates the systematic review of academic papers for signs of data fabrication, image manipulation, and statistical misconduct. It combines 38+ detectors across five dimensions:
+
+- **Statistical reverse-engineering** — reconstructs test statistics from reported data and compares with claimed p-values (3-level audit: method correctness → data validity → conclusion consistency)
+- **Arithmetic pattern detection** — constant difference/ratio, last-digit bias, decimal prefix repetition, byte-identical blocks (16 weapons, Monte Carlo baseline: FPR < 0.5%)
+- **Image forensics** — ELA, block duplication, background mutation, SIFT feature matching, Western Blot lane splicing detection, AI-generated image frequency-domain detection
+- **Cross-paper analysis** — email association, author anomaly, pHash cross-comparison
+- **Chinese-specific detection** — tortured phrases (machine translation artifacts), Chinese statistical reporting patterns
+
+### Quick Start
+
+```bash
+pip install PyMuPDF Pillow openpyxl scipy numpy beautifulsoup4
+python3 scripts/unified_review.py paper.pdf
+python3 scripts/unified_review.py paper.pdf --format markdown --output report.md
+python3 scripts/unified_review.py ~/papers/ --cross-file
+```
+
+### Key Design Principles
+
+- **False positive rate over sensitivity** — better to miss than to falsely accuse
+- **Monte Carlo baseline** — all arithmetic detectors validated with 10,000 random simulations
+- **Negative control baseline** — validated on 30 PLOS ONE papers (2024) to establish real-world FPR
+- **Irrefutable evidence chain** — every finding includes location, observation, rule, severity, and alternative explanation
+- **MIT License** — free for academic and commercial use
+
+### False Positive Rates (validated on 30 PLOS ONE 2024 papers)
+
+| Detector | FPR | Status |
+|----------|:---:|:------:|
+| Fixed difference/ratio (Monte Carlo) | 0% | ✅ Trusted |
+| ELA, block duplication, background mutation | 0% | ✅ Trusted |
+| AI image frequency-domain detection | 0% | ✅ Trusted |
+| Tortured phrases, WB band correlation | 0% | ✅ Trusted |
+| Cross-table consistency | 3.3% | ✅ Low |
+| aHash image screening | 6.7% | ⚠️ Moderate |
+| SIFT feature matching | 60% | 🚨 Manual review required |
+| WB lane splicing | 73% | 🚨 Manual review required |
+
+---
+
 ## 概述
 
 Heaven's Net 从公开的学术不端案例中提炼检测方法论，固化为 18 个独立可运行的 Python 脚本，加上一个统一的 CLI 入口。
